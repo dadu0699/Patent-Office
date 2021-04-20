@@ -1,12 +1,17 @@
 INSERT INTO Region (name)
-    SELECT DISTINCT TRIM(f1.REGION_DEL_PAIS) FROM file1 f1; 
+    SELECT DISTINCT TRIM(f3.NOMBRE_REGION) FROM file3 f3
+    WHERE REGION_PADRE = ''; 
+    
+INSERT INTO Region (name, parentID)
+    SELECT DISTINCT TRIM(f3.NOMBRE_REGION), r.regionID FROM file3 f3
+    INNER JOIN Region r ON (r.name = TRIM(f3.REGION_PADRE))
+    WHERE REGION_PADRE != ''; 
 
 INSERT INTO Country (name, capital, population, area, regionID)
     SELECT DISTINCT TRIM(f1.PAIS_DEL_INVENTOR), TRIM(f1.CAPITAL), 
         TRIM(f1.POBLACION_DEL_PAIS), TRIM(f1.AREA_EN_KM2), r.regionID 
     FROM file1 f1
     INNER JOIN Region r ON (r.name = TRIM(f1.REGION_DEL_PAIS));
-
 
 INSERT INTO Border (cardinalDirection, countryID, countryBorderID)
     SELECT DISTINCT 'N', c.countryID, cb.countryID
