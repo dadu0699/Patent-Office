@@ -90,7 +90,7 @@ CREATE TABLE InvestigationArea (
     name VARCHAR(100) NOT NULL,
     description TEXT,
     ranking SMALLINT NOT NULL,
-    professionalID INT NOT NULL,
+    professionalID INT,
     PRIMARY KEY (investigationAreaID),
     FOREIGN KEY (professionalID) REFERENCES Professional(professionalID)
         ON UPDATE CASCADE ON DELETE CASCADE
