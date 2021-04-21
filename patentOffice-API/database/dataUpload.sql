@@ -59,17 +59,145 @@ INSERT INTO Inventor (name, countryID)
 DROP TEMPORARY TABLE numbers;
 /* END More than one inventor per invention */ 
 
+/* V2 */
+INSERT INTO Inventor (name, countryID)
+    SELECT DISTINCT
+        TRIM(SUBSTRING_INDEX(SUBSTRING_INDEX(TRIM(f1.INVENTOR), ',', 1), ',', -1)),  
+        c.countryID
+    FROM file1 f1 
+    INNER JOIN Country c ON (c.name = TRIM(f1.PAIS_DEL_INVENTOR))
+    WHERE f1.INVENTOR != '';
+
+INSERT INTO Inventor (name, countryID)
+    SELECT s2.name, s2.countryID 
+    FROM (
+        SELECT DISTINCT
+            TRIM(SUBSTRING_INDEX(SUBSTRING_INDEX(TRIM(f1.INVENTOR), ',', 2), ',', -1)) name,  
+            c.countryID
+        FROM file1 f1 
+        INNER JOIN Country c ON (c.name = TRIM(f1.PAIS_DEL_INVENTOR))
+        WHERE f1.INVENTOR != ''
+    ) s2
+    LEFT JOIN Inventor inv ON (inv.name = s2.name AND inv.countryID = s2.countryID)
+    WHERE inv.name IS NULL AND inv.countryID IS NULL;
+
+INSERT INTO Inventor (name, countryID)
+    SELECT s2.name, s2.countryID 
+    FROM (
+        SELECT DISTINCT
+            TRIM(SUBSTRING_INDEX(SUBSTRING_INDEX(TRIM(f1.INVENTOR), ',', 3), ',', -1)) name,  
+            c.countryID
+        FROM file1 f1 
+        INNER JOIN Country c ON (c.name = TRIM(f1.PAIS_DEL_INVENTOR))
+        WHERE f1.INVENTOR != ''
+    ) s2
+    LEFT JOIN Inventor inv ON (inv.name = s2.name AND inv.countryID = s2.countryID)
+    WHERE inv.name IS NULL AND inv.countryID IS NULL;
+/* END V2 */ 
+
+/* V3 */
+INSERT INTO Inventor (name, countryID)
+    SELECT DISTINCT
+        TRIM(SUBSTRING_INDEX(SUBSTRING_INDEX(TRIM(f1.INVENTOR), ',', 1), ',', -1)),  
+        c.countryID
+    FROM file1 f1 
+    INNER JOIN Country c ON (c.name = TRIM(f1.PAIS_DEL_INVENTOR))
+    WHERE f1.INVENTOR != ''
+    UNION
+    SELECT DISTINCT
+        TRIM(SUBSTRING_INDEX(SUBSTRING_INDEX(TRIM(f1.INVENTOR), ',', 2), ',', -1)) name,  
+        c.countryID
+    FROM file1 f1 
+    INNER JOIN Country c ON (c.name = TRIM(f1.PAIS_DEL_INVENTOR))
+    WHERE f1.INVENTOR != ''
+    UNION
+    SELECT DISTINCT
+        TRIM(SUBSTRING_INDEX(SUBSTRING_INDEX(TRIM(f1.INVENTOR), ',', 3), ',', -1)) name,  
+        c.countryID
+    FROM file1 f1 
+    INNER JOIN Country c ON (c.name = TRIM(f1.PAIS_DEL_INVENTOR))
+    WHERE f1.INVENTOR != ''
+/* END V3 */ 
+
 INSERT INTO Invention (name, year, countryID)
     SELECT DISTINCT TRIM(f1.INVENTO), TRIM(f1.ANIO_DEL_INVENTO), 
         c.countryID
     FROM file1 f1
     INNER JOIN Country c ON (c.name = TRIM(f1.PAIS_DEL_INVENTO));
 
+/* InventorInvention */
 INSERT INTO InventorInvention (inventorID, inventionID)
     SELECT DISTINCT i.inventorID, iv.inventionID
     FROM file1 f1
-    INNER JOIN Inventor i ON (i.name = TRIM(f1.INVENTOR))
-    INNER JOIN Invention iv ON (iv.name = TRIM(f1.INVENTO));
+    INNER JOIN Country c ON (c.name = TRIM(f1.PAIS_DEL_INVENTOR))
+    INNER JOIN Inventor i ON (
+            i.name = TRIM(SUBSTRING_INDEX(SUBSTRING_INDEX(TRIM(f1.INVENTOR), ',', 1), ',', -1)) AND
+            i.countryID = c.countryID
+        )
+    INNER JOIN Invention iv ON (iv.name = TRIM(f1.INVENTO) AND iv.countryID = c.countryID)
+    WHERE f1.inventor != '';
+    
+INSERT INTO InventorInvention (inventorID, inventionID)
+    SELECT s2.inventorID, s2.inventionID 
+    FROM (
+        SELECT DISTINCT i.inventorID, iv.inventionID
+        FROM file1 f1
+        INNER JOIN Country c ON (c.name = TRIM(f1.PAIS_DEL_INVENTOR))
+        INNER JOIN Inventor i ON (
+                i.name = TRIM(SUBSTRING_INDEX(SUBSTRING_INDEX(TRIM(f1.INVENTOR), ',', 2), ',', -1)) AND
+                i.countryID = c.countryID
+            )
+        INNER JOIN Invention iv ON (iv.name = TRIM(f1.INVENTO) AND iv.countryID = c.countryID)
+    ) s2
+    LEFT JOIN InventorInvention inv ON (inv.inventorID = s2.inventorID AND inv.inventionID = s2.inventionID)
+    WHERE inv.inventorID IS NULL AND inv.inventionID IS NULL;    
+
+INSERT INTO InventorInvention (inventorID, inventionID)
+    SELECT s2.inventorID, s2.inventionID 
+    FROM (
+        SELECT DISTINCT i.inventorID, iv.inventionID
+        FROM file1 f1
+        INNER JOIN Country c ON (c.name = TRIM(f1.PAIS_DEL_INVENTOR))
+        INNER JOIN Inventor i ON (
+                i.name = TRIM(SUBSTRING_INDEX(SUBSTRING_INDEX(TRIM(f1.INVENTOR), ',', 3), ',', -1)) AND
+                i.countryID = c.countryID
+            )
+        INNER JOIN Invention iv ON (iv.name = TRIM(f1.INVENTO) AND iv.countryID = c.countryID)
+    ) s2
+    LEFT JOIN InventorInvention inv ON (inv.inventorID = s2.inventorID AND inv.inventionID = s2.inventionID)
+    WHERE inv.inventorID IS NULL AND inv.inventionID IS NULL;
+/* InventorInvention */
+
+/* InventorInvention V2 */
+INSERT INTO InventorInvention (inventorID, inventionID)
+    SELECT DISTINCT i.inventorID, iv.inventionID
+    FROM file1 f1
+    INNER JOIN Country c ON (c.name = TRIM(f1.PAIS_DEL_INVENTOR))
+    INNER JOIN Inventor i ON (
+            i.name = TRIM(SUBSTRING_INDEX(SUBSTRING_INDEX(TRIM(f1.INVENTOR), ',', 1), ',', -1)) AND
+            i.countryID = c.countryID
+        )
+    INNER JOIN Invention iv ON (iv.name = TRIM(f1.INVENTO) AND iv.countryID = c.countryID)
+    WHERE f1.inventor != ''
+    UNION
+    SELECT DISTINCT i.inventorID, iv.inventionID
+    FROM file1 f1
+    INNER JOIN Country c ON (c.name = TRIM(f1.PAIS_DEL_INVENTOR))
+    INNER JOIN Inventor i ON (
+            i.name = TRIM(SUBSTRING_INDEX(SUBSTRING_INDEX(TRIM(f1.INVENTOR), ',', 2), ',', -1)) AND
+            i.countryID = c.countryID
+        )
+    INNER JOIN Invention iv ON (iv.name = TRIM(f1.INVENTO) AND iv.countryID = c.countryID)
+    UNION
+    SELECT DISTINCT i.inventorID, iv.inventionID
+    FROM file1 f1
+    INNER JOIN Country c ON (c.name = TRIM(f1.PAIS_DEL_INVENTOR))
+    INNER JOIN Inventor i ON (
+            i.name = TRIM(SUBSTRING_INDEX(SUBSTRING_INDEX(TRIM(f1.INVENTOR), ',', 3), ',', -1)) AND
+            i.countryID = c.countryID
+        )
+    INNER JOIN Invention iv ON (iv.name = TRIM(f1.INVENTO) AND iv.countryID = c.countryID);
+/* END InventorInvention V2 */
 
 INSERT INTO Professional (name, salary, commission, contractStart)
     SELECT DISTINCT TRIM(f1.PROFESIONAL_ASIGANDO_AL_INVENTO), 
@@ -131,3 +259,8 @@ INSERT INTO CountryAnswer (countryID, answerID)
     INNER JOIN Question qt ON (qt.utterance = TRIM(f2.PREGUNTA))
     INNER JOIN Answer ans ON (ans.questionID = qt.questionID 
 		AND f2.RESPUESTA_PAIS = SUBSTR(ans.utterance, 1, 1));
+
+
+SELECT table_name, table_rows
+FROM INFORMATION_SCHEMA.TABLES
+WHERE TABLE_SCHEMA = 'patentOffice';
