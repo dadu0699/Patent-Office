@@ -5,6 +5,7 @@ const path = require('path');
 
 // Routes import
 const indexRouter = require('./routes/index.route');
+const queryRouter = require('./routes/query.route');
 const regionRouter = require('./routes/region.route');
 
 const app = express();
@@ -24,6 +25,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
 app.use('/', indexRouter);
+app.use('/query', queryRouter);
 app.use('/region', regionRouter);
 
 // Port assignment

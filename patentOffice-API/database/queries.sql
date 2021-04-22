@@ -70,8 +70,8 @@ SELECT p.name AS 'Professional', ia.name AS 'Area', p.salary,
 FROM ProfessionalArea pa
 INNER JOIN Professional p ON (p.professionalID = pa.professionalID)
 INNER JOIN InvestigationArea ia ON (ia.investigationAreaID = pa.investigationAreaID)
-INNER JOIN averageSalary avgs ON (avgs.investigationAreaID = ia.investigationAreaID)
-WHERE p.salary > avgs.avgSalary
+INNER JOIN averageSalary avgs ON (avgs.investigationAreaID = ia.investigationAreaID 
+	AND avgs.avgSalary < p.salary)
 ORDER BY Area, 'Average salary'; 
 
 
@@ -80,8 +80,8 @@ ORDER BY Area, 'Average salary';
 SELECT cnt.name AS 'Country', count(ca.countryID) AS 'Answers'
 FROM CountryAnswer ca
 INNER JOIN Country cnt ON (cnt.countryID = ca.countryID)
-INNER JOIN Answer ans ON (ans.answerID = ca.answerID)
-WHERE ans.correct = TRUE OR ans.correct IS NULL
+INNER JOIN Answer ans ON (ans.answerID = ca.answerID 
+	AND (ans.correct = TRUE OR ans.correct IS NULL))
 GROUP BY Country
 ORDER BY Answers DESC;
 
@@ -93,8 +93,8 @@ FROM ProfessionalInvention poin
 INNER JOIN Invention inv ON (inv.inventionID = poin.inventionID)
 INNER JOIN Professional p ON (p.professionalID = poin.professionalID)
 INNER JOIN ProfessionalArea pa ON (pa.professionalID = p.professionalID)
-INNER JOIN InvestigationArea inva ON (inva.investigationAreaID = pa.investigationAreaID)
-WHERE inva.name = 'Optica'
+INNER JOIN InvestigationArea inva ON (inva.investigationAreaID = pa.investigationAreaID 
+	AND inva.name = 'Optica')
 ORDER BY inv.name;
 
 
@@ -111,8 +111,8 @@ GROUP BY Letter;
 SELECT invt.name AS 'Inventor', inv.name AS 'Invention'
 FROM InventorInvention ii
 INNER JOIN Invention inv ON (inv.inventionID = ii.inventionID)
-INNER JOIN Inventor invt ON (invt.inventorID = ii.inventorID)
-WHERE UPPER(invt.name) LIKE 'BE%';
+INNER JOIN Inventor invt ON (invt.inventorID = ii.inventorID 
+	AND UPPER(invt.name) LIKE 'BE%');
 
 
 
@@ -120,9 +120,9 @@ WHERE UPPER(invt.name) LIKE 'BE%';
 SELECT invt.name AS 'Inventor'
 FROM InventorInvention ii
 INNER JOIN Invention inv ON (inv.inventionID = ii.inventionID)
-INNER JOIN Inventor invt ON (invt.inventorID = ii.inventorID)
-WHERE UPPER(invt.name) LIKE 'B%' AND (UPPER(invt.name) LIKE '%R' 
-	OR UPPER(invt.name) LIKE '%N') AND (inv.year >= 1801 AND inv.year <= 1900)
+INNER JOIN Inventor invt ON (invt.inventorID = ii.inventorID 
+	AND (UPPER(invt.name) LIKE 'B%' AND (UPPER(invt.name) LIKE '%R' 
+	OR UPPER(invt.name) LIKE '%N') AND (inv.year >= 1801 AND inv.year <= 1900)))
 ORDER BY inv.year;
 
 
