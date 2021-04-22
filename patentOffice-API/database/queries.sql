@@ -217,7 +217,7 @@ WHERE countryID NOT IN (SELECT countryID FROM Border)
 
 
 /* QUERY 19 */
-SELECT DISTINCTROW ct.name, ctb.name AS 'Frontera'
+SELECT DISTINCTROW ct.name, ctb.name AS 'Border'
 FROM Border b
 INNER JOIN Country ct ON (ct.countryID = b.countryID)
 INNER JOIN Country ctb ON (ctb.countryID = b.countryBorderID)

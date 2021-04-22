@@ -128,6 +128,83 @@ const queryModel = {
                 AND CHAR_LENGTH(inv.name) = 4;`;
 
         return this.executeQuery(query, callback);
+    },
+    query13(callback) {
+        const query = `SELECT p.name AS 'professional', p.salary, p.commission, 
+                (p.salary+p.commission) AS 'total'
+            FROM Professional p
+            WHERE p.commission > (p.salary * 0.25);`;
+
+        return this.executeQuery(query, callback);
+    },
+    query14(callback) {
+        const query = `WITH polls AS (
+                SELECT sv.name, ca.countryID, COUNT(sv.surveyID) 
+                FROM CountryAnswer ca
+                INNER JOIN Answer ans ON (ans.answerID = ca.answerID)
+                INNER JOIN Question qt ON (qt.questionID = ans.questionID)
+                INNER JOIN Survey sv ON (sv.surveyID = qt.surveyID)
+                GROUP BY sv.name, ca.countryID
+            )
+            SELECT p.name, COUNT(p.name) AS 'total'
+            FROM polls p
+            GROUP BY p.name;`;
+
+        return this.executeQuery(query, callback);
+    },
+    query15(callback) {
+        const query = `SELECT * FROM Country ct
+            WHERE ct.population > (
+                SELECT SUM(ct.population) 
+                FROM Country ct
+                INNER JOIN Region r ON (r.regionID = ct.regionID)
+                WHERE r.name = 'Centro America'
+            );`;
+
+        return this.executeQuery(query, callback);
+    },
+    query16(callback) {
+        const query = `SELECT 'Coming soon'`;
+
+        return this.executeQuery(query, callback);
+    },
+    query17(callback) {
+        const query = `SELECT inv.name AS 'inventor', invt.name AS 'invention'  
+            FROM InventorInvention ii
+            INNER JOIN Inventor inv ON (inv.inventorID = ii.inventorID)
+            INNER JOIN Invention invt ON (invt.inventionID = ii.inventionID 
+                AND invt.year IN (
+                        SELECT invt.year
+                        FROM InventorInvention ii
+                        INNER JOIN Inventor inv ON (inv.inventorID = ii.inventorID AND inv.name = 'Benz')
+                        INNER JOIN Invention invt ON (invt.inventionID = ii.inventionID)
+                    )
+                )`;
+
+        return this.executeQuery(query, callback);
+    },
+    query18(callback) {
+        const query = `SELECT * FROM Country 
+            WHERE countryID NOT IN (SELECT countryID FROM Border)
+                AND area > (SELECT area FROM Country WHERE name = 'Japon')`;
+
+        return this.executeQuery(query, callback);
+    },
+    query19(callback) {
+        const query = `SELECT DISTINCTROW ct.name, ctb.name AS 'border'
+            FROM Border b
+            INNER JOIN Country ct ON (ct.countryID = b.countryID)
+            INNER JOIN Country ctb ON (ctb.countryID = b.countryBorderID)
+            ORDER BY ct.name;`;
+
+        return this.executeQuery(query, callback);
+    },
+    query20(callback) {
+        const query = `SELECT p.name AS 'professional', p.salary, p.commission
+            FROM Professional p
+            WHERE p.salary > (p.commission * 2); `;
+
+        return this.executeQuery(query, callback);
     }
 };
 

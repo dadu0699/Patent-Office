@@ -15,5 +15,13 @@ router.route('/report-9').get(queryController.query9);
 router.route('/report-10').get(queryController.query10);
 router.route('/report-11').get(queryController.query11);
 router.route('/report-12').get(queryController.query12);
+router.route('/report-13').get(queryController.query13);
+router.route('/report-14').get(queryController.query14);
+router.route('/report-15').get(queryController.query15);
+router.route('/report-16').get(queryController.query16);
+router.route('/report-17').get(queryController.query17);
+router.route('/report-18').get(queryController.query18);
+router.route('/report-19').get(queryController.query19);
+router.route('/report-20').get(queryController.query20);
 
 module.exports = router;

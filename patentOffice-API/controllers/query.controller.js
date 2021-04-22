@@ -192,6 +192,134 @@ const queryController = {
                 data: results
             });
         });
+    },
+    query13: (_req, res) => {
+        queryModel.query13((err, results) => {
+            if (err) {
+                res.status(500).send({
+                    code: 500,
+                    data: err
+                });
+                return;
+            }
+
+            res.status(200).send({
+                code: 200,
+                data: results
+            });
+        });
+    },
+    query14: (_req, res) => {
+        queryModel.query14((err, results) => {
+            if (err) {
+                res.status(500).send({
+                    code: 500,
+                    data: err
+                });
+                return;
+            }
+
+            res.status(200).send({
+                code: 200,
+                data: results
+            });
+        });
+    },
+    query15: (_req, res) => {
+        queryModel.query15((err, results) => {
+            if (err) {
+                res.status(500).send({
+                    code: 500,
+                    data: err
+                });
+                return;
+            }
+
+            res.status(200).send({
+                code: 200,
+                data: results
+            });
+        });
+    },
+    query16: (_req, res) => {
+        queryModel.query16((err, results) => {
+            if (err) {
+                res.status(500).send({
+                    code: 500,
+                    data: err
+                });
+                return;
+            }
+
+            res.status(200).send({
+                code: 200,
+                data: results
+            });
+        });
+    },
+    query17: (_req, res) => {
+        queryModel.query17((err, results) => {
+            if (err) {
+                res.status(500).send({
+                    code: 500,
+                    data: err
+                });
+                return;
+            }
+
+            res.status(200).send({
+                code: 200,
+                data: results
+            });
+        });
+    },
+    query18: (_req, res) => {
+        queryModel.query18((err, results) => {
+            if (err) {
+                res.status(500).send({
+                    code: 500,
+                    data: err
+                });
+                return;
+            }
+
+            res.status(200).send({
+                code: 200,
+                data: results
+            });
+        });
+    },
+    query19: (_req, res) => {
+        queryModel.query19((err, results) => {
+            if (err) {
+                res.status(500).send({
+                    code: 500,
+                    data: err
+                });
+                return;
+            }
+
+            res.status(200).send({
+                code: 200,
+                data: results
+            });
+        });
+    },
+    query20: (_req, res) => {
+        queryModel.query20((err, results) => {
+            if (err) {
+                res.status(500).send({
+                    code: 500,
+                    data: err
+                });
+                return;
+            }
+
+            res.status(200).send({
+                code: 200,
+                data: results
+            });
+        });
     }
 };
 
