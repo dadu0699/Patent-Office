@@ -189,7 +189,7 @@ WHERE inva.investigationAreaID NOT IN (
 	INNER JOIN ProfessionalInvention pinv ON (pinv.inventionID = ii.inventionID)
 	INNER JOIN Professional pi ON (pi.professionalID = pinv.professionalID)
 	INNER JOIN ProfessionalArea pa ON (pa.professionalID = pi.professionalID)
-)
+);
 
 
 
@@ -204,7 +204,7 @@ INNER JOIN Invention invt ON (invt.inventionID = ii.inventionID
 			INNER JOIN Inventor inv ON (inv.inventorID = ii.inventorID AND inv.name = 'Benz')
 			INNER JOIN Invention invt ON (invt.inventionID = ii.inventionID)
 		)
-    )
+    );
 
 
 
@@ -212,7 +212,7 @@ INNER JOIN Invention invt ON (invt.inventionID = ii.inventionID
 /* QUERY 18 */
 SELECT * FROM Country 
 WHERE countryID NOT IN (SELECT countryID FROM Border)
-	AND area > (SELECT area FROM Country WHERE name = 'Japon')
+	AND area >= (SELECT area FROM Country WHERE name = 'Japon');
 
 
 

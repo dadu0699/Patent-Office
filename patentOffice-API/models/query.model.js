@@ -179,14 +179,14 @@ const queryModel = {
                         INNER JOIN Inventor inv ON (inv.inventorID = ii.inventorID AND inv.name = 'Benz')
                         INNER JOIN Invention invt ON (invt.inventionID = ii.inventionID)
                     )
-                )`;
+                );`;
 
         return this.executeQuery(query, callback);
     },
     query18(callback) {
         const query = `SELECT * FROM Country 
             WHERE countryID NOT IN (SELECT countryID FROM Border)
-                AND area > (SELECT area FROM Country WHERE name = 'Japon')`;
+                AND area > (SELECT area FROM Country WHERE name = 'Japon');`;
 
         return this.executeQuery(query, callback);
     },

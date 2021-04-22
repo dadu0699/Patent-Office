@@ -10,6 +10,10 @@ const regionRouter = require('./routes/region.route');
 const countryRouter = require('./routes/country.route');
 const borderRouter = require('./routes/border.route');
 const questionRouter = require('./routes/question.route');
+const answerRouter = require('./routes/answer.route');
+const inventorRouter = require('./routes/inventor.route');
+const inventionRouter = require('./routes/invention.route');
+const invRouter = require('./routes/inventor-invention.route');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -33,6 +37,10 @@ app.use('/region', regionRouter);
 app.use('/country', countryRouter);
 app.use('/border', borderRouter);
 app.use('/question', questionRouter);
+app.use('/answer', answerRouter);
+app.use('/inventor', inventorRouter);
+app.use('/invention', inventionRouter);
+app.use('/inventor-invention', invRouter);
 
 // Port assignment
 app.listen(PORT, () => {

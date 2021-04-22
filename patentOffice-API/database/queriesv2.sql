@@ -141,7 +141,8 @@ WHERE invt.year IN (
 /* QUERY 18 */
 SELECT * FROM Country 
 WHERE countryID NOT IN (SELECT countryID FROM Border)
-	AND area > (SELECT area FROM Country WHERE name = 'Japon')
+	AND area >= (SELECT area FROM Country WHERE name = 'Japon')
+	/*AND name != 'Japon'*/;
 
 	
 /* QUERY 19 */

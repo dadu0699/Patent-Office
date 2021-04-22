@@ -16,7 +16,7 @@ const countryModel = {
 
         const query = `INSERT INTO Country (name, capital,
                 population, area, regionID)
-            VALUES('${name}', ${capital}, ${population}, ${area}, 
+            VALUES('${name}', '${capital}', ${population}, ${area}, 
                 ${regionID});`;
 
         return this.executeQuery(query, callback);
@@ -30,7 +30,7 @@ const countryModel = {
             regionID
         } = params
 
-        const query = `UPDATE Country SET name = '${name}', capital = ${capital}, 
+        const query = `UPDATE Country SET name = '${name}', capital = '${capital}', 
                 population = ${population}, area = ${area}, regionID = ${regionID}
             WHERE countryID = ${id};`;
 
