@@ -247,7 +247,9 @@ INSERT INTO Question (utterance, surveyID)
 
 INSERT INTO Answer (utterance, correct, questionID)
     SELECT DISTINCT TRIM(RESPUESTAS_POSIBLES), 
-        IF(TRIM(RESPUESTAS_POSIBLES) = TRIM(RESPUESTA_CORRECTA), true, false),
+		IF(TRIM(RESPUESTA_CORRECTA) = "", NULL, 
+			IF(TRIM(RESPUESTAS_POSIBLES) = TRIM(RESPUESTA_CORRECTA), true, false)
+		) AS 'Correct',
         qt.questionID
     FROM file2 f2
     INNER JOIN Question qt ON (qt.utterance = TRIM(f2.PREGUNTA));
