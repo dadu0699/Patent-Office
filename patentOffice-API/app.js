@@ -7,6 +7,9 @@ const path = require('path');
 const indexRouter = require('./routes/index.route');
 const queryRouter = require('./routes/query.route');
 const regionRouter = require('./routes/region.route');
+const countryRouter = require('./routes/country.route');
+const borderRouter = require('./routes/border.route');
+const questionRouter = require('./routes/question.route');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -27,6 +30,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/query', queryRouter);
 app.use('/region', regionRouter);
+app.use('/country', countryRouter);
+app.use('/border', borderRouter);
+app.use('/question', questionRouter);
 
 // Port assignment
 app.listen(PORT, () => {
