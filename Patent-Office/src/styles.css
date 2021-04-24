@@ -1,1 +1,55 @@
-/* You can add global styles to this file, and also import other style files */
+table {
+  width: 100%;
+}
+
+tr.mat-header-row {
+  height: 30px;
+  font-size: 15px !important;
+  font-weight: bold;
+}
+
+.mat-header-cell {
+  font-size: 15px;
+  color: #e0e6ed;
+  background-color: #060818 !important;
+}
+
+.mat-cell,
+.mat-footer-cell {
+  color: #e0e6ed;
+}
+
+.mat-table thead,
+.mat-table tbody,
+.mat-table tfoot,
+mat-header-row,
+mat-row,
+mat-footer-row,
+[mat-header-row],
+[mat-row],
+[mat-footer-row],
+.mat-table-sticky {
+  background-color: #11152d;
+}
+
+.mat-paginator,
+.mat-paginator-page-size .mat-select-trigger {
+  color: #e0e6ed;
+  background-color: #060818;
+}
+
+/*
+th.mat-header-cell {
+  text-align: center !important;
+}
+
+.mat-cell {
+  text-align: center;
+  justify-content: center;
+}
+
+.mat-paginator-page-size-label,
+.mat-paginator-page-size-value {
+  display: none;
+}
+*/
