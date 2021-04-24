@@ -37,8 +37,13 @@ const borderModel = {
         return this.executeQuery(query, callback);
     },
     get(id, callback) {
-        let query = `SELECT * FROM Border`;
-        if (id) query += ` WHERE borderID = ${id};`;
+        let query = `SELECT b.countryID, ct.name AS 'country', 
+                    b.countryBorderID, ctb.name AS 'border',
+                    b.cardinalDirection
+            FROM Border b
+            INNER JOIN Country ct ON (ct.countryID = b.countryID)
+            INNER JOIN Country ctb ON (ctb.countryID = b.countryBorderID)`;
+        if (id) query += ` WHERE b.borderID = ${id};`;
 
         return this.executeQuery(query, callback);
     }

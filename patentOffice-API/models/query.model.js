@@ -92,7 +92,7 @@ const queryModel = {
         return this.executeQuery(query, callback);
     },
     query9(callback) {
-        const query = `SELECT invt.name AS 'Inventor', inv.name AS 'Invention'
+        const query = `SELECT invt.name AS 'inventor', inv.name AS 'invention'
             FROM InventorInvention ii
             INNER JOIN Invention inv ON (inv.inventionID = ii.inventionID)
             INNER JOIN Inventor invt ON (invt.inventorID = ii.inventorID 
@@ -122,7 +122,7 @@ const queryModel = {
         return this.executeQuery(query, callback);
     },
     query12(callback) {
-        const query = `SELECT *
+        const query = `SELECT inv.name
             FROM Invention inv
             WHERE UPPER(inv.name) LIKE 'L%' 
                 AND CHAR_LENGTH(inv.name) = 4;`;
@@ -186,7 +186,7 @@ const queryModel = {
     query18(callback) {
         const query = `SELECT * FROM Country 
             WHERE countryID NOT IN (SELECT countryID FROM Border)
-                AND area > (SELECT area FROM Country WHERE name = 'Japon');`;
+                AND area >= (SELECT area FROM Country WHERE name = 'Japon');`;
 
         return this.executeQuery(query, callback);
     },
