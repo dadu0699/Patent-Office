@@ -6,6 +6,7 @@ import { AuthGuard } from '../guards/auth.guard';
 import { PagesComponent } from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CountryComponent } from './country/country.component';
+import { QuestionComponent } from './question/question.component';
 
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
     children: [
       { path: '', component: DashboardComponent },
       { path: 'country', component: CountryComponent },
+      { path: 'question', component: QuestionComponent },
     ]
   },
 ];

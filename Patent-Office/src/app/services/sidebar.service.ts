@@ -11,6 +11,8 @@ export class SidebarService {
   get menu(): any[] {
     this._menu = [
       { title: 'Dashboard', icon: 'home', url: '/' },
+      { title: 'Paises', icon: '', url: 'country' },
+      { title: 'Preguntas', icon: '', url: 'question' },
     ];
 
     return this._menu;

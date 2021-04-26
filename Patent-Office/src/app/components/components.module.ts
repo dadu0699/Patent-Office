@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-import { MatButtonModule } from '@angular/material/button';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
@@ -81,8 +79,6 @@ import { Query20Component } from './query20/query20.component';
     CommonModule,
     FormsModule,
     HttpClientModule,
-    MatButtonModule,
-    MatButtonToggleModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,

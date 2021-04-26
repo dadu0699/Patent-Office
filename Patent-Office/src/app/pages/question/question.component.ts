@@ -4,33 +4,32 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { Country } from 'src/app/models/country.model';
-import { CountryService } from 'src/app/services/country.service';
+import { Question } from 'src/app/models/question.model';
+import { QuestionService } from 'src/app/services/question.service';
 
 @Component({
-  selector: 'app-country',
-  templateUrl: './country.component.html',
-  styleUrls: ['./country.component.css']
+  selector: 'app-question',
+  templateUrl: './question.component.html',
+  styleUrls: ['./question.component.css']
 })
-export class CountryComponent implements OnInit, AfterViewInit {
+export class QuestionComponent implements OnInit, AfterViewInit {
   public pageSize: number;
   public displayedColumns: string[];
-  public dataSource: MatTableDataSource<Country>;
-  public countries: Country[];
+  public dataSource: MatTableDataSource<Question>;
+  public questions: Question[];
 
   @ViewChild('paginator', { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private _countryService: CountryService) {
+  constructor(private _questionService: QuestionService) {
     this.pageSize = 6;
-    this.dataSource = new MatTableDataSource<Country>();
-    this.displayedColumns = ['name', 'capital',
-      'population', 'area', 'region', 'actions'];
-    this.countries = [];
+    this.dataSource = new MatTableDataSource<Question>();
+    this.displayedColumns = ['utterance', 'survey', 'actions'];
+    this.questions = [];
   }
 
   async ngOnInit(): Promise<void> {
-    this.dataSource.data = this.countries;
+    this.dataSource.data = this.questions;
     await this.getData();
   }
 
@@ -41,10 +40,10 @@ export class CountryComponent implements OnInit, AfterViewInit {
 
   private async getData(): Promise<void> {
     try {
-      const data = await this._countryService.getAll();
+      const data = await this._questionService.getAll();
       if (data['code'] === 200) {
-        this.countries = data['data'];
-        this.dataSource.data = this.countries;
+        this.questions = data['data'];
+        this.dataSource.data = this.questions;
       }
     } catch (err) {
       console.log(<any>err);
@@ -60,11 +59,11 @@ export class CountryComponent implements OnInit, AfterViewInit {
     }
   }
 
-  public update(country: Country) {
-    console.log(country)
+  public update(question: Question) {
+    console.log(question)
   }
 
-  public delete(countryID: number) {
-    console.log(countryID)
+  public delete(questionID: number) {
+    console.log(questionID)
   }
 }

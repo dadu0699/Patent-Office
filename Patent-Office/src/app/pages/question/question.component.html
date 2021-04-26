@@ -1,0 +1,50 @@
+<div class="row layout-top-spacing">
+
+  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
+    <div class="statbox widget box box-shadow">
+      <div class="widget-header">
+        <div class="row">
+          <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+            <h3><b>Preguntas</b></h3>
+          </div>
+        </div>
+      </div>
+      <div class="widget-content widget-content-area">
+
+        <div class="mat-elevation-z8">
+          <table mat-table [dataSource]="dataSource" matSort>
+
+            <ng-container matColumnDef="utterance">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> PREGUNTA </th>
+              <td mat-cell *matCellDef="let element" style="max-width: 690px;"> {{element.utterance}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="survey">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> ENCUESTA </th>
+              <td mat-cell *matCellDef="let element"> {{element.survey}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef> </th>
+              <td mat-cell *matCellDef="let element">
+                <button mat-icon-button aria-label="update" (click)="update(element)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button aria-label="delete" (click)="delete(element.questionID)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+
+          <mat-paginator #paginator="matPaginator" [pageSize]="pageSize" showFirstLastButtons></mat-paginator>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>

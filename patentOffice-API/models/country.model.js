@@ -41,8 +41,11 @@ const countryModel = {
         return this.executeQuery(query, callback);
     },
     get(id, callback) {
-        let query = `SELECT * FROM Country`;
-        if (id) query += ` WHERE countryID = ${id};`;
+        let query = `SELECT ct.countryID, ct.name, ct.capital,
+                ct.population, ct.area, r.regionID, r.name AS 'region' 
+            FROM Country ct
+            INNER JOIN Region r ON (r.regionID = ct.regionID)`;
+        if (id) query += ` WHERE ct.countryID = ${id};`;
 
         return this.executeQuery(query, callback);
     }

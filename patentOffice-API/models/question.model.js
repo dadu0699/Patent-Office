@@ -32,7 +32,10 @@ const questionModel = {
         return this.executeQuery(query, callback);
     },
     get(id, callback) {
-        let query = `SELECT * FROM Question`;
+        let query = `SELECT qt.questionID, qt.utterance,
+                sv.surveyID, sv.name AS 'survey'
+            FROM Question qt
+            INNER JOIN Survey sv ON (sv.surveyID = qt.surveyID)`;
         if (id) query += ` WHERE questionID = ${id};`;
 
         return this.executeQuery(query, callback);
