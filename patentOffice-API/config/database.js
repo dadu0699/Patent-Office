@@ -18,14 +18,16 @@ const params = {
     }
 };
 
-const mysqlConnection = mysql.createConnection(params);
+/* 
+    const mysqlConnection = mysql.createConnection(params);
 
-mysqlConnection.connect(err => {
-    if (err) {
-        console.error(err);
-        return;
-    }
-    console.log(`Database ${params.database} is connected`);
-});
+    mysqlConnection.connect(err => {
+        if (err) {
+            console.error(err);
+            return;
+        }
+        console.log(`Database ${params.database} is connected`);
+    });
+*/
 
-module.exports = mysqlConnection;
+module.exports = mysql.createPool(params);
