@@ -28,7 +28,25 @@ ORDER BY cnt.area DESC;
 
 
 
-/* TODO QUERY 4 */ 
+/* QUERY 4 */ 
+SELECT ina.name AS 'Area', inap.name AS 'Boss', 
+	p.name AS 'Professional' 
+FROM ProfessionalArea pa
+INNER JOIN InvestigationArea ina ON (ina.investigationAreaID = pa.investigationAreaID)
+INNER JOIN Professional p ON (p.professionalID = pa.professionalID)
+INNER JOIN Professional inap ON (inap.professionalID = ina.professionalID)
+UNION
+SELECT ina.name AS 'Area', 
+	(
+		SELECT p.name FROM InvestigationArea ina 
+        INNER JOIN Professional p ON (p.professionalID = ina.professionalID)
+        WHERE ina.name = 'TODAS'
+	) AS 'Boss', p.name AS 'Professional'
+FROM ProfessionalArea pa
+INNER JOIN InvestigationArea ina ON (ina.investigationAreaID = pa.investigationAreaID 
+	AND ina.professionalID IS NULL)
+INNER JOIN Professional p ON (p.professionalID = pa.professionalID);
+
 SELECT inva.investigationAreaID, inva.name, 
 	inva.professionalID, p.name
 FROM InvestigationArea inva
@@ -179,15 +197,15 @@ WHERE ct.population > (
 
 
 
-/* TODO QUERY 16 */
-SELECT * FROM 
-InvestigationArea inva
+/* QUERY 16 */
+SELECT inva.name AS 'AREA', pia.name AS 'Professional'
+FROM InvestigationArea inva
 INNER JOIN Professional pia ON (pia.professionalID = inva.professionalID)
 WHERE inva.investigationAreaID NOT IN (
-	SELECT */*pa.investigationAreaID*/ FROM Inventor inv
-	INNER JOIN InventorInvention ii ON (ii.inventorID = inv.inventorID AND inv.name != 'Pasteur')
-	INNER JOIN ProfessionalInvention pinv ON (pinv.inventionID = ii.inventionID)
-	INNER JOIN Professional pi ON (pi.professionalID = pinv.professionalID)
+	SELECT pa.investigationAreaID 
+	FROM ProfessionalInvention pi 
+	INNER JOIN InventorInvention ii ON (ii.inventionID = pi.inventionID)
+	INNER JOIN Inventor inv ON (inv.inventorID = ii.inventorID AND inv.name = 'Pasteur')
 	INNER JOIN ProfessionalArea pa ON (pa.professionalID = pi.professionalID)
 );
 
@@ -228,4 +246,4 @@ ORDER BY ct.name;
 /* QUERY 20 */
 SELECT p.name AS 'Professional', p.salary, p.commission
 FROM Professional p
-WHERE p.salary > (p.commission * 2); 
+WHERE p.salary > (p.commission * 2) AND p.commission > 0; 

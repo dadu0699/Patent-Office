@@ -27,7 +27,7 @@ export class Query4Component implements OnInit, AfterViewInit {
   constructor(private _queryService: QueryService) {
     this.onResize();
     this.dataSource = new MatTableDataSource<any>();
-    this.displayedColumns = [];
+    this.displayedColumns = ['area', 'boss', 'professional'];
     this.data = [];
   }
 
@@ -43,7 +43,7 @@ export class Query4Component implements OnInit, AfterViewInit {
 
   private async getData(): Promise<void> {
     try {
-      const data = await this._queryService.getQuery('report-3');
+      const data = await this._queryService.getQuery('report-4');
       if (data['code'] === 200) {
         this.data = data['data'];
         this.dataSource.data = this.data;

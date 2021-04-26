@@ -19,6 +19,7 @@ import { PagesComponent } from './pages.component';
 import { CountryComponent } from './country/country.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { QuestionComponent } from './question/question.component';
+import { InventionComponent } from './invention/invention.component';
 
 @NgModule({
   declarations: [
@@ -26,12 +27,14 @@ import { QuestionComponent } from './question/question.component';
     DashboardComponent,
     CountryComponent,
     QuestionComponent,
+    InventionComponent,
   ],
   exports: [
     PagesComponent,
     DashboardComponent,
     CountryComponent,
-    QuestionComponent
+    QuestionComponent,
+    InventionComponent,
   ],
   imports: [
     CommonModule,

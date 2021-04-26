@@ -246,9 +246,9 @@ INSERT INTO Question (utterance, surveyID)
     INNER JOIN Survey sv ON (sv.name = TRIM(f2.NOMBRE_ENCUESTA));
 
 INSERT INTO Answer (utterance, correct, questionID)
-    SELECT DISTINCT TRIM(RESPUESTAS_POSIBLES), 
-		IF(TRIM(RESPUESTA_CORRECTA) = "", NULL, 
-			IF(TRIM(RESPUESTAS_POSIBLES) = TRIM(RESPUESTA_CORRECTA), true, false)
+    SELECT DISTINCT TRIM(f2.RESPUESTAS_POSIBLES), 
+		IF(TRIM(f2.RESPUESTA_CORRECTA) = '', NULL, 
+			IF(TRIM(f2.RESPUESTAS_POSIBLES) = TRIM(f2.RESPUESTA_CORRECTA), true, false)
 		) AS 'Correct',
         qt.questionID
     FROM file2 f2

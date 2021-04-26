@@ -36,7 +36,23 @@ const queryModel = {
         return this.executeQuery(query, callback);
     },
     query4(callback) {
-        const query = `SELECT 'Coming soon'`;
+        const query = `SELECT ina.name AS 'area', inap.name AS 'boss', 
+                p.name AS 'professional' 
+            FROM ProfessionalArea pa
+            INNER JOIN InvestigationArea ina ON (ina.investigationAreaID = pa.investigationAreaID)
+            INNER JOIN Professional p ON (p.professionalID = pa.professionalID)
+            INNER JOIN Professional inap ON (inap.professionalID = ina.professionalID)
+            UNION
+            SELECT ina.name AS 'area', 
+                (
+                    SELECT p.name FROM InvestigationArea ina 
+                    INNER JOIN Professional p ON (p.professionalID = ina.professionalID)
+                    WHERE ina.name = 'TODAS'
+                ) AS 'boss', p.name AS 'professional'
+            FROM ProfessionalArea pa
+            INNER JOIN InvestigationArea ina ON (ina.investigationAreaID = pa.investigationAreaID 
+                AND ina.professionalID IS NULL)
+            INNER JOIN Professional p ON (p.professionalID = pa.professionalID);`;
 
         return this.executeQuery(query, callback);
     },
@@ -164,7 +180,17 @@ const queryModel = {
         return this.executeQuery(query, callback);
     },
     query16(callback) {
-        const query = `SELECT 'Coming soon'`;
+        const query = `SELECT inva.name AS 'area', pia.name AS 'professional'
+            FROM InvestigationArea inva
+            INNER JOIN Professional pia ON (pia.professionalID = inva.professionalID)
+            WHERE inva.investigationAreaID NOT IN (
+                SELECT pa.investigationAreaID 
+                FROM ProfessionalInvention pi 
+                INNER JOIN InventorInvention ii ON (ii.inventionID = pi.inventionID)
+                INNER JOIN Inventor inv ON (inv.inventorID = ii.inventorID
+                        AND inv.name = 'Pasteur')
+                INNER JOIN ProfessionalArea pa ON (pa.professionalID = pi.professionalID)
+            );`;
 
         return this.executeQuery(query, callback);
     },
@@ -202,7 +228,7 @@ const queryModel = {
     query20(callback) {
         const query = `SELECT p.name AS 'professional', p.salary, p.commission
             FROM Professional p
-            WHERE p.salary > (p.commission * 2); `;
+            WHERE p.salary > (p.commission * 2) AND p.commission > 0;`;
 
         return this.executeQuery(query, callback);
     }
