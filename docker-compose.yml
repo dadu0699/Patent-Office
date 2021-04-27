@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  backend:
+    build: ./patentOffice-API
+    ports:
+      - "3000:3000"
+    restart: always
+    networks:
+      - bd1py2
+
+  frontend:
+    build: ./Patent-Office
+    ports:
+      - "80:80"
+    restart: always
+    networks:
+      - bd1py2
+
+networks:
+  bd1py2:
+    driver: "bridge"
