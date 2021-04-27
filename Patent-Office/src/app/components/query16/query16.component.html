@@ -6,6 +6,11 @@
       <td mat-cell *matCellDef="let element"> {{element.area}} </td>
     </ng-container>
 
+    <ng-container matColumnDef="boss">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> JEFE </th>
+      <td mat-cell *matCellDef="let element"> {{element.boss}} </td>
+    </ng-container>
+
     <ng-container matColumnDef="professional">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> PROFESIONAL </th>
       <td mat-cell *matCellDef="let element"> {{element.professional}} </td>

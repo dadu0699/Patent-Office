@@ -6,14 +6,22 @@ GROUP BY pi.professionalID, p.name
 ORDER BY count(*) DESC;
 
 /* QUERY 2 */
-SELECT c.name AS 'continente', r.name AS 'region', 
-	cnt.name AS 'pais', count(ca.countryID) AS 'respuestas'
+(SELECT c.name AS 'continente', cnt.name AS 'pais', 
+	count(ca.countryID) AS 'respuestas'
 FROM CountryAnswer ca
 RIGHT JOIN Country cnt ON (cnt.countryID = ca.countryID)
 INNER JOIN Region r ON (r.regionID = cnt.regionID)
-LEFT JOIN Region c ON (c.regionID = r.parentID)
-GROUP BY continente, region, pais
-ORDER BY respuestas DESC; 
+INNER JOIN Region c ON (c.regionID = r.parentID)
+GROUP BY continente, pais)
+UNION
+(SELECT r.name AS 'continente', cnt.name AS 'pais', 
+	count(ca.countryID) AS 'respuestas'
+FROM CountryAnswer ca
+RIGHT JOIN Country cnt ON (cnt.countryID = ca.countryID)
+INNER JOIN Region r ON (r.regionID = cnt.regionID)
+WHERE r.parentID IS NULL
+GROUP BY continente, pais)
+ORDER BY respuestas DESC;
 
 /* QUERY 3 */
 SELECT cnt.name AS 'pais', cnt.area

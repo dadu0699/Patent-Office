@@ -36,23 +36,24 @@ const queryModel = {
         return this.executeQuery(query, callback);
     },
     query4(callback) {
-        const query = `SELECT ina.name AS 'area', inap.name AS 'boss', 
+        const query = `(SELECT ina.name AS 'area', inap.name AS 'boss', 
                 p.name AS 'professional' 
             FROM ProfessionalArea pa
             INNER JOIN InvestigationArea ina ON (ina.investigationAreaID = pa.investigationAreaID)
             INNER JOIN Professional p ON (p.professionalID = pa.professionalID)
-            INNER JOIN Professional inap ON (inap.professionalID = ina.professionalID)
+            INNER JOIN Professional inap ON (inap.professionalID = ina.professionalID))
             UNION
-            SELECT ina.name AS 'area', 
+            (SELECT ina.name AS 'area', 
                 (
                     SELECT p.name FROM InvestigationArea ina 
                     INNER JOIN Professional p ON (p.professionalID = ina.professionalID)
                     WHERE ina.name = 'TODAS'
-                ) AS 'boss', p.name AS 'professional'
+                ) AS 'boss', p.name AS 'Professional'
             FROM ProfessionalArea pa
             INNER JOIN InvestigationArea ina ON (ina.investigationAreaID = pa.investigationAreaID 
                 AND ina.professionalID IS NULL)
-            INNER JOIN Professional p ON (p.professionalID = pa.professionalID);`;
+            INNER JOIN Professional p ON (p.professionalID = pa.professionalID))
+            ORDER BY boss ASC, professional ASC;`;
 
         return this.executeQuery(query, callback);
     },
@@ -128,11 +129,11 @@ const queryModel = {
         return this.executeQuery(query, callback);
     },
     query11(callback) {
-        const query = `SELECT ct.name, COUNT(ct.countryID) AS 'borders'
+        const query = `SELECT ct.name, ct.area, COUNT(ct.countryID) AS 'borders'
             FROM Border b
             INNER JOIN Country ct ON (ct.countryID = b.countryID)
             GROUP BY ct.name, ct.area
-            HAVING COUNT(ct.countryID) >= 7
+            HAVING COUNT(ct.countryID) > 7
             ORDER BY ct.area DESC;`;
 
         return this.executeQuery(query, callback);
@@ -180,17 +181,19 @@ const queryModel = {
         return this.executeQuery(query, callback);
     },
     query16(callback) {
-        const query = `SELECT inva.name AS 'area', pia.name AS 'professional'
-            FROM InvestigationArea inva
-            INNER JOIN Professional pia ON (pia.professionalID = inva.professionalID)
-            WHERE inva.investigationAreaID NOT IN (
+        const query = `SELECT inva.name AS 'area', inap.name AS 'boss', p.name AS 'professional'
+            FROM ProfessionalArea pa
+            INNER JOIN Professional p ON (p.professionalID = pa.professionalID)
+            LEFT JOIN InvestigationArea inva ON (inva.investigationAreaID = pa.investigationAreaID)
+            LEFT JOIN Professional inap ON (inap.professionalID = inva.professionalID)
+            WHERE pa.investigationAreaID NOT IN (
                 SELECT pa.investigationAreaID 
                 FROM ProfessionalInvention pi 
                 INNER JOIN InventorInvention ii ON (ii.inventionID = pi.inventionID)
-                INNER JOIN Inventor inv ON (inv.inventorID = ii.inventorID
-                        AND inv.name = 'Pasteur')
+                INNER JOIN Inventor inv ON (inv.inventorID = ii.inventorID AND inv.name = 'Pasteur')
                 INNER JOIN ProfessionalArea pa ON (pa.professionalID = pi.professionalID)
-            );`;
+            )
+            ORDER BY area, boss, Professional ASC;`;
 
         return this.executeQuery(query, callback);
     },
