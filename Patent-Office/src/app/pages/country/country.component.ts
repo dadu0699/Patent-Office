@@ -10,7 +10,7 @@ import { CountryService } from 'src/app/services/country.service';
 @Component({
   selector: 'app-country',
   templateUrl: './country.component.html',
-  styleUrls: ['./country.component.css']
+  styleUrls: ['../../../assets/css/widget.css']
 })
 export class CountryComponent implements OnInit, AfterViewInit {
   public pageSize: number;

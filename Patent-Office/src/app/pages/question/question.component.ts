@@ -10,7 +10,7 @@ import { QuestionService } from 'src/app/services/question.service';
 @Component({
   selector: 'app-question',
   templateUrl: './question.component.html',
-  styleUrls: ['./question.component.css']
+  styleUrls: ['../../../assets/css/widget.css']
 })
 export class QuestionComponent implements OnInit, AfterViewInit {
   public pageSize: number;
