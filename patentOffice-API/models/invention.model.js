@@ -34,8 +34,11 @@ const inventionModel = {
         return this.executeQuery(query, callback);
     },
     get(id, callback) {
-        let query = `SELECT * FROM Invention`;
-        if (id) query += ` WHERE inventionID = ${id};`;
+        let query = `SELECT inv.inventionID, inv.name, inv.year,
+                ct.countryID, ct.name AS 'country'
+            FROM Invention inv
+            INNER JOIN Country ct ON (ct.countryID = inv.countryID)`;
+        if (id) query += ` WHERE inv.inventionID = ${id};`;
 
         return this.executeQuery(query, callback);
     }

@@ -13,6 +13,7 @@ export class SidebarService {
       { title: 'Dashboard', icon: 'home', url: '/' },
       { title: 'Paises', icon: '', url: 'country' },
       { title: 'Preguntas', icon: '', url: 'question' },
+      { title: 'Inventos', icon: '', url: 'invention' },
     ];
 
     return this._menu;
