@@ -16,8 +16,8 @@ import { SharedModule } from '../shared/shared.module';
 import { ComponentsModule } from '../components/components.module';
 
 import { PagesComponent } from './pages.component';
-import { CountryComponent } from './country/country.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { CountryComponent } from './country/country.component';
 import { QuestionComponent } from './question/question.component';
 import { InventionComponent } from './invention/invention.component';
 
