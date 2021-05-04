@@ -89,7 +89,7 @@ const queryModel = {
         return this.executeQuery(query, callback);
     },
     query7(callback) {
-        const query = `SELECT DISTINCT inv.name
+        const query = `SELECT DISTINCT inv.name, inva.name AS area
             FROM ProfessionalInvention poin
             INNER JOIN Invention inv ON (inv.inventionID = poin.inventionID)
             INNER JOIN Professional p ON (p.professionalID = poin.professionalID)

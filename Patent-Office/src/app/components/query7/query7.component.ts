@@ -27,7 +27,7 @@ export class Query7Component implements OnInit, AfterViewInit {
   constructor(private _queryService: QueryService) {
     this.onResize();
     this.dataSource = new MatTableDataSource<any>();
-    this.displayedColumns = ['name'];
+    this.displayedColumns = ['name', 'area'];
     this.data = [];
   }
 
